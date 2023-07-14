@@ -5,15 +5,44 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import React, { useState } from "react";
+
+import { getProductsList, getProductsDetails } from '../services/home-service';
 
 import './home.css'
 
 function Home() {
 
+  const [productsList, setProductsList] = useState([]);
+
+
+  //getProductsDetails("ZmGrkLRPXOTpxsU4jjAcv");
+  var products = getProductsList();
+  setProductsList(products);
+  console.log("Hola")
+
     var counter = 10;
-    const productsList = [];
+    //const productsList = [];
+
+    productsList.forEach(product => {
+      productsList.push(
+        <Col xl="3" lg="4" md="6" sm="12">
+          <Card style={{ width: '18rem' }} className='card-margin-spacing'>
+            <Card.Img variant="top" src={product.imgUrl} />
+            <Card.Body>          
+              <Card.Text>
+                <b>Brand:</b> {product.brand}<br />
+                <b>Model:</b> {product.model}<br />
+                <b>Price:</b> {product.price}<br />
+              </Card.Text>
+              <Button variant="primary">Ver detalles</Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      );
+    });
   
-    while (counter > 0) {
+    /*while (counter > 0) {
       productsList.push(
         <Col xl="3" lg="4" md="6" sm="12">
           <Card style={{ width: '18rem' }} className='card-margin-spacing'>
@@ -30,7 +59,7 @@ function Home() {
         </Col>
       );
       counter--
-    }
+    }*/
 
     return (
         <span>

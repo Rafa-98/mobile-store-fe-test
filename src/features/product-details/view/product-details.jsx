@@ -6,10 +6,16 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
+import { getProductsDetails } from '../services/product-details';
+import React, { useState } from "react";
 
 import './product-details.css'
 
 function ProductDetails() {
+
+    const [product, setProduct] = useState({});
+
+    getProductsDetails("ZmGrkLRPXOTpxsU4jjAcv");
 
     const width = 500;
 
@@ -30,18 +36,18 @@ function ProductDetails() {
                 <Card className='card-spacing'>
                     <Card.Title>Product Description</Card.Title>
                     <Card.Text>
-                      <b>Brand:</b> Acer<br />
-                      <b>Model:</b> Iconia Talk S<br />
-                      <b>Price:</b> 170<br />
-                      <b>CPU:</b> Quad-core 1.3 GHz Cortex-A53<br />
-                      <b>RAM:</b> 2 GB RAM<br />
-                      <b>os:</b> Android 6.0 (Marshmallow)<br />
-                      <b>display Resolution:</b> 7.0 inches (~69.8% screen-to-body ratio)<br />
-                      <b>battery:</b> <br />
-                      <b>Primary Camera:</b> <br />
-                      <b>Secondary Camera:</b> <br />
-                      <b>Dimentions:</b> <br />
-                      <b>Weight:</b> 260<br />
+                      <b>Brand:</b> {product.brand}<br />
+                      <b>Model:</b> {product.model}<br />
+                      <b>Price:</b> {product.price}<br />
+                      <b>CPU:</b> {product.cpu}<br />
+                      <b>RAM:</b> {product.ram}<br />
+                      <b>os:</b> {product.os}<br />
+                      <b>display Resolution:</b> {product.displayResolution}<br />
+                      <b>battery:</b> {product.battery}<br />
+                      <b>Primary Camera:</b> {product.primaryCamera[0]}, {product.primaryCamera[1]}<br />
+                      <b>Secondary Camera:</b> {product.secondaryCmera[0]}, {product.secondaryCmera[1]}<br />
+                      <b>Dimentions:</b> {product.dimentions}<br />
+                      <b>Weight:</b> {product.weight}<br />
                     </Card.Text>                    
                 </Card>
                 <br />
