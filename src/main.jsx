@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Home from "./features/home/view/home.jsx";
 import ProductDetails from "./features/product-details/view/product-details.jsx";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const routes = [
   {
