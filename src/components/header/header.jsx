@@ -9,12 +9,11 @@ function Header() {
     return (
         <Navbar bg="danger" data-bs-theme="dark" fixed='top'  expand="lg" className="bg-body-tertiary">
             <Container>
-              <Navbar.Brand href="#home">Mobile Store</Navbar.Brand>
+              <Navbar.Brand href="/">Mobile Store</Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                  <Nav.Link href="#home">Home</Nav.Link>
-                  <Nav.Link href="#home">Product Details</Nav.Link>
+                  <Nav.Link href="/">Home</Nav.Link>                  
                 </Nav>
               </Navbar.Collapse>
               <Navbar.Collapse className="justify-content-end">
