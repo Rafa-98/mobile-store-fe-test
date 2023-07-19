@@ -1,7 +1,7 @@
 import { getProduct } from '../../../http/https';
 
 export const getProductsDetails = function (productId){
-    new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         var products = await getProduct(productId);
         resolve(products);
     });

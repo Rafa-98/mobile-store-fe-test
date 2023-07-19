@@ -2,7 +2,8 @@ import axios from 'axios';
 
 const URL = "https://itx-frontend-test.onrender.com/api";
 
-export async function getProducts() {    
+export async function getProducts() {   
+   console.log("Entro a getProducts") 
     return axios
          .get(URL + '/product')
          .then((response) => {
@@ -15,6 +16,7 @@ export async function getProducts() {
 }
 
 export async function getProduct(productId) {
+   console.log("Entro a getProduct") 
     return axios
          .get(URL + '/product/' + productId)
          .then((response) => {
@@ -27,6 +29,7 @@ export async function getProduct(productId) {
 }
 
 function AddProductToCart(product) {
+   console.log("Entro a AddProductToCart") 
     axios
          .post(URL + '/cart/', product)
          .then((response) => {

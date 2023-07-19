@@ -5,13 +5,6 @@ export const getProductsList = new Promise(async (resolve, reject) => {
     resolve(products);
 });
 
-export const getProductsDetails = function (productId){
-    new Promise(async (resolve, reject) => {
-        var products = await getProduct(productId);
-        resolve(products);
-    });
-} 
-
 /*export async function getProductsList() {
     console.log("Initializing request")
     var products = await getProducts();
