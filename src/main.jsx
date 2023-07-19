@@ -10,6 +10,8 @@ import Home from "./features/home/view/home.jsx";
 import ProductDetails from "./features/product-details/view/product-details.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Header from './components/header/header';
+
 const routes = [
   {
     path: "/",
@@ -30,6 +32,7 @@ const router = createBrowserRouter(routes);
 ReactDOM.createRoot(document.getElementById('root')).render(
   
     <Provider store={store}>
+      <Header />
       <RouterProvider router={router} />
     </Provider>
   

@@ -1,3 +1,11 @@
 .pageTitle {
     text-align: center;
-  }
+}
+
+.card-image-spacing {
+  padding: 4%;
+}
+
+.card-body {
+  background-color: lightgray;
+}

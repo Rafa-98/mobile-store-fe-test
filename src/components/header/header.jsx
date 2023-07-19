@@ -5,7 +5,14 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Cart2 } from 'react-bootstrap-icons';
 import Badge from 'react-bootstrap/Badge';
 
+import { connect, useSelector } from "react-redux";
+import { Link } from 'react-router-dom';
+import React from "react";
+
 function Header() {
+
+  const cart = useSelector((state) => state.cart)
+
     return (
         <Navbar bg="danger" data-bs-theme="dark" fixed='top'  expand="lg" className="bg-body-tertiary">
             <Container>
@@ -18,7 +25,7 @@ function Header() {
               </Navbar.Collapse>
               <Navbar.Collapse className="justify-content-end">
               <Navbar.Text>
-                <Cart2  size={40} /><Badge bg="success">5</Badge>
+                <Cart2  size={40} /><Badge bg="success">{cart.quantity}</Badge>
               </Navbar.Text>
             </Navbar.Collapse>
             </Container>

@@ -1,6 +1,18 @@
 import { getProducts, getProduct } from '../../../http/https';
 
-export async function getProductsList() {
+export const getProductsList = new Promise(async (resolve, reject) => {
+    var products = await getProducts();
+    resolve(products);
+});
+
+export const getProductsDetails = function (productId){
+    new Promise(async (resolve, reject) => {
+        var products = await getProduct(productId);
+        resolve(products);
+    });
+} 
+
+/*export async function getProductsList() {
     console.log("Initializing request")
     var products = await getProducts();
     console.log('Products Are: ', products);
@@ -12,4 +24,4 @@ export async function getProductsDetails(productId) {
     var product = await getProduct(productId);
     console.log('Products Are: ', products);
     return product;
-}
+}*/

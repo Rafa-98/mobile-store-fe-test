@@ -1,39 +1,32 @@
 import Header from '../../../components/header/header';
+import LoadingModal from '../../../components/modal/modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { getProductsList, getProductsDetails } from '../services/home-service';
+import { connect, useSelector, useDispatch } from "react-redux";
+import { add_to_list } from "./../../../redux/actions/productListAction";
 
 import './home.css'
 
-function Home() {
-
-  const [productsList, setProductsList] = useState([]);
-
-
-  //getProductsDetails("ZmGrkLRPXOTpxsU4jjAcv");
-  var products = getProductsList();
-  setProductsList(products);
-  console.log("Hola")
-
-    var counter = 10;
-    //const productsList = [];
-
-    productsList.forEach(product => {
-      productsList.push(
+function mapProducts(products) {
+    var tempProducts = [];
+    console.log("At mapping ", products);
+    products.map((product) => {
+      tempProducts.push(
         <Col xl="3" lg="4" md="6" sm="12">
           <Card style={{ width: '18rem' }} className='card-margin-spacing'>
-            <Card.Img variant="top" src={product.imgUrl} />
-            <Card.Body>          
+            <Card.Img variant="top" src={product.imgUrl} className='card-image-spacing'/>
+            <Card.Body className="card-body">          
               <Card.Text>
                 <b>Brand:</b> {product.brand}<br />
                 <b>Model:</b> {product.model}<br />
-                <b>Price:</b> {product.price}<br />
+                <b>Price:</b> ${product.price}<br />
               </Card.Text>
               <Button variant="primary">Ver detalles</Button>
             </Card.Body>
@@ -41,47 +34,95 @@ function Home() {
         </Col>
       );
     });
+    return tempProducts;
+}
+
+function Home() {
+/*  
+
+  const [productsList, setProductsList] = useState([]);
   
-    /*while (counter > 0) {
-      productsList.push(
-        <Col xl="3" lg="4" md="6" sm="12">
-          <Card style={{ width: '18rem' }} className='card-margin-spacing'>
-            <Card.Img variant="top" src="https://m.media-amazon.com/images/I/71HN4P-pd5L.jpg" />
-            <Card.Body>          
-              <Card.Text>
-                <b>Brand:</b> Acer<br />
-                <b>Model:</b> Iconia Talk S<br />
-                <b>Price:</b> 170<br />
-              </Card.Text>
-              <Button variant="primary">Ver detalles</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      );
-      counter--
-    }*/
+  const [loading, setLoading] = useState(true);
+  
+  /*var products = getProductsList();
+  setProductsList(products);*/  
+
+    const [records, setRecords] = useState([])
+
+    let products = useSelector((state) => state.productsList)
+    const dispatch = useDispatch();
+
+    useEffect(() => {                  
+        getProductsList
+        .then((productsList) => {                        
+            setRecords(productsList);            
+          })
+        .catch((err) => console.log(err));      
+    }, [])
+
+    var loading = false    
+
+    /*/return (
+      <span>
+        
+        { records.length == 0 ? (
+          <span>
+            <h1>NO HAY NADA QUE MOSTRAR</h1>
+          </span>
+        ) : (
+          <span>
+            <br /><br /><br />
+            <h2>AQUI SI HAY COSAS QUE MOSTRAR</h2>
+            <ul>
+          
+               { records.map((product, index) => (
+                  <li key={product.id}>{product.model}</li>
+                )) }
+
+            </ul>
+          </span>
+        ) }
+        
+        
+      </span>
+    )*/
+
 
     return (
         <span>
-            <Header />
-            <h1 className='pageTitle'>Products List</h1>
+          
+          { records.length == 0 ? (
+            <span>
+              <h1>NO HAY NADA QUE MOSTRAR</h1>
+            </span>
+          ) : (
+            <span>                            
+                <Container fluid className='top-spacing'>
+                  <h1 className='pageTitle'>Products List</h1>
+                  
+                    <Form>
+                      <Form.Group style={{ width: '20rem' }} className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Filtrar</Form.Label>
+                        <Form.Control type="email" placeholder="IPhone" />
+                      </Form.Group>    
+                    </Form>
+                
+                    <Row className="justify-content-md-center">
+                      {mapProducts(records)}
+                    </Row>
+                    
+                  
 
-            <Container fluid className='top-spacing'>
-        <h1 className='pageTitle'>Products List</h1>
-        <Form>
-          <Form.Group style={{ width: '20rem' }} className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Filtrar</Form.Label>
-            <Form.Control type="email" placeholder="IPhone" />
-          </Form.Group>    
-        </Form>
+                </Container>
 
-      
-        <Row className="justify-content-md-center">
-          {productsList}
-        </Row>
-      </Container>
-        </span>        
-    )
+              
+            </span>
+          ) }
+          
+          
+        </span>
+      )
+
 }
 
 export default Home
