@@ -10,6 +10,7 @@ import Image from 'react-bootstrap/Image';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { getProductsDetails } from '../services/product-details';
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { connect, useDispatch, useSelector } from "react-redux";
 import { add_to_cart } from "./../../../redux/actions/cartAction";
@@ -40,22 +41,32 @@ function color(product) {
 
 function ProductDetails() {
 
+    const navigate = useNavigate();
+
     const [record, setRecord] = useState(null)
     const [mobileColorCode, setColor] = useState("")
     const [mobileStorageCode, setStorage] = useState("")
     const [validated, setValidated] = useState(false);
-    const {state} = useLocation();
-    const { productId } = state; // Read values passed on state
+    const {state} = useLocation();        
+
+    let productId = "";    
     
-    useEffect(() => {                  
-        getProductsDetails("ZmGrkLRPXOTpxsU4jjAcv")
-        //getProductsDetails(productId)
+    useEffect(() => { 
+      if (state !== null) {
+        productId = state.productId        
+      }      
+      if (productId == null || productId == "") {        
+        navigate('/');
+      }          
+      else {               
+        getProductsDetails(productId)
         .then((product) => { 
-            console.log("La respuesta del detalle de product: ", product);                       
+            console.log("La respuesta del detalle de product: ", product);                      
             setRecord(product);            
           })
-        .catch((err) => console.log(err));      
-    }, [])    
+        .catch((err) => console.log(err));    
+      }          
+    }, [])
 
     const width = 500;
 
@@ -74,18 +85,16 @@ function ProductDetails() {
 
     }
 
-    const storageChanged = (storageSelected) => {
-      console.log("Ha escogido el storage: ", storageSelected)
+    const storageChanged = (storageSelected) => {      
       setStorage(storageSelected);
     }
     
-    const colorChanged = (colorSelected) => {
-      console.log("Ha escogido el color: ", colorSelected)
+    const colorChanged = (colorSelected) => {      
       setColor(colorSelected);
     }
 
     return (
-        <span>            
+        <span>                        
             <h1 className='pageTitle'>Product details</h1>
             <Container fluid className='top-spacing'>
             {record == null ? (
