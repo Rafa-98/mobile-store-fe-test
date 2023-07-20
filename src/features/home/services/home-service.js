@@ -5,6 +5,15 @@ export const getProductsList = new Promise(async (resolve, reject) => {
     resolve(products);
 });
 
+export const filterProducts = (products, filterString) => {
+    console.log("Tiene que filtrar productos")
+    products.map((product) => {
+        if((product.brand).includes(filterString) || (product.model).includes(filterString)) {
+            return product;
+        }
+    });
+}
+
 /*export async function getProductsList() {
     console.log("Initializing request")
     var products = await getProducts();

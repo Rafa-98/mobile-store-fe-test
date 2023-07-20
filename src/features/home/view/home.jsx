@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import React, { useState, useEffect } from "react";
 
-import { getProductsList } from '../services/home-service';
+import { getProductsList, filterProducts } from '../services/home-service';
 import { connect, useSelector, useDispatch } from "react-redux";
 import { add_to_list } from "./../../../redux/actions/productListAction";
 
@@ -20,17 +20,20 @@ import { ROUTES } from "../../../utils/ROUTES";
 function Home() {
 
   const [records, setRecords] = useState([])
+  const [productsToDisplay, setProductsToDisplay] = useState([])
+  const [loading, setLoading] = useState(true)
   let products = useSelector((state) => state.productsList)
   const dispatch = useDispatch();
   
   useEffect(() => {                  
       getProductsList
       .then((productsList) => {                        
-          setRecords(productsList);            
+          setRecords(productsList);  
+          setProductsToDisplay(productsList);  
+          setLoading(false);  
         })
       .catch((err) => console.log(err));      
-  }, [])
-  var loading = false   
+  }, [])  
   
   const navigate = useNavigate();
   const goToProductDetails = (productId) => navigate(ROUTES.DETAILS, { state: { productId: productId } });
@@ -57,9 +60,19 @@ function Home() {
     return tempProducts;
   }
 
+  const [filterString, setFilterString] = useState([])
+  const filterProducts = (text) => {            
+    var result = records.filter(function (product) {
+      return ((product.brand.toUpperCase()).includes(text.toUpperCase()) || (product.model.toUpperCase()).includes(text.toUpperCase()))
+    })
+    
+    setFilterString(text);    
+    setProductsToDisplay(result);
+  }
+
   return (
     <span>          
-      { records.length == 0 ? (
+      { loading == true ? (
         <span>
           <LoadingModal dataTag="products" />
         </span>
@@ -70,11 +83,11 @@ function Home() {
               <Form>
                 <Form.Group style={{ width: '20rem' }} className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Filter</Form.Label>
-                  <Form.Control type="email" placeholder="IPhone" />
+                  <Form.Control type="text" placeholder="Filter by Brand or Model" value={filterString} onChange={e => {filterProducts(e.target.value)}}/>
                 </Form.Group>    
               </Form>                
               <Row className="justify-content-md-center">
-                {mapProducts(records)}
+                {mapProducts(productsToDisplay)}
               </Row>                                      
             </Container>              
         </span>
