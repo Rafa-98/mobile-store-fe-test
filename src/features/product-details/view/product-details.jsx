@@ -18,6 +18,7 @@ import { add_to_cart } from "./../../../redux/actions/cartAction";
 
 import { useLocation } from 'react-router-dom';
 import './product-details.css'
+import { ROUTES } from '../../../utils/ROUTES';
 
 function storage(product) {
     var tempStorage = [];    
@@ -56,7 +57,7 @@ function ProductDetails() {
         productId = state.productId        
       }      
       if (productId == null || productId == "") {        
-        navigate('/');
+        navigate(ROUTES.HOME);
       }          
       else {               
         getProductsDetails(productId)
@@ -98,7 +99,7 @@ function ProductDetails() {
             <h1 className='pageTitle'>Product details</h1>
             <Container fluid className='top-spacing'>
             {record == null ? (
-                <LoadingModal dataTag="products" />
+                <LoadingModal dataTag="product details" />
             ) : (
                 <span>                
                 <Row >            

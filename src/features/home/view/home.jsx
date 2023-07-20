@@ -15,15 +15,28 @@ import { add_to_list } from "./../../../redux/actions/productListAction";
 import { useNavigate } from "react-router-dom";
 
 import './home.css'
+import { ROUTES } from "../../../utils/ROUTES";
 
-/*function goToProductDetails(productId) {
+function Home() {
+
+  const [records, setRecords] = useState([])
+  let products = useSelector((state) => state.productsList)
+  const dispatch = useDispatch();
+  
+  useEffect(() => {                  
+      getProductsList
+      .then((productsList) => {                        
+          setRecords(productsList);            
+        })
+      .catch((err) => console.log(err));      
+  }, [])
+  var loading = false   
+  
   const navigate = useNavigate();
-    navigate("/details");
-}*/
-
-/*function mapProducts(products) {
-    var tempProducts = [];
-    console.log("At mapping ", products);
+  const goToProductDetails = (productId) => navigate(ROUTES.DETAILS, { state: { productId: productId } });
+  
+  const mapProducts = (products) => {
+    var tempProducts = [];      
     products.map((product) => {
       tempProducts.push(
         <Col xl="3" lg="4" md="6" sm="12">
@@ -42,121 +55,32 @@ import './home.css'
       );
     });
     return tempProducts;
-}*/
+  }
 
-function Home() {
-/*  
-
-  const [productsList, setProductsList] = useState([]);
-  
-  const [loading, setLoading] = useState(true);
-  
-  /*var products = getProductsList();
-  setProductsList(products);*/  
-
-    const [records, setRecords] = useState([])
-
-    let products = useSelector((state) => state.productsList)
-    const dispatch = useDispatch();
-
-    useEffect(() => {                  
-        getProductsList
-        .then((productsList) => {                        
-            setRecords(productsList);            
-          })
-        .catch((err) => console.log(err));      
-    }, [])
-
-    var loading = false   
-    
-    const navigate = useNavigate();
-    const goToProductDetails = (productId) => navigate('/details', { state: { productId: productId } });
-
-    const mapProducts = (products) => {
-      var tempProducts = [];
-      console.log("At mapping ", products);
-      products.map((product) => {
-        tempProducts.push(
-          <Col xl="3" lg="4" md="6" sm="12">
-            <Card style={{ width: '18rem' }} className='card-margin-spacing'>
-              <Card.Img variant="top" src={product.imgUrl} className='card-image-spacing'/>
-              <Card.Body className="card-body">          
-                <Card.Text>
-                  <b>Brand:</b> {product.brand}<br />
-                  <b>Model:</b> {product.model}<br />
-                  <b>Price:</b> ${product.price}<br />
-                </Card.Text>
-                <Button variant="primary" onClick={() => goToProductDetails(product.id)}>More details</Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        );
-      });
-      return tempProducts;
-    }
-
-
-    /*/return (
-      <span>
-        
-        { records.length == 0 ? (
-          <span>
-            <h1>NO HAY NADA QUE MOSTRAR</h1>
-          </span>
-        ) : (
-          <span>
-            <br /><br /><br />
-            <h2>AQUI SI HAY COSAS QUE MOSTRAR</h2>
-            <ul>
-          
-               { records.map((product, index) => (
-                  <li key={product.id}>{product.model}</li>
-                )) }
-
-            </ul>
-          </span>
-        ) }
-        
-        
-      </span>
-    )*/
-
-
-    return (
+  return (
+    <span>          
+      { records.length == 0 ? (
         <span>
-          
-          { records.length == 0 ? (
-            <span>
-              <h1>No products to display</h1>
-            </span>
-          ) : (
-            <span>                            
-                <Container fluid className='top-spacing'>
-                  <h1 className='pageTitle'>Products List</h1>
-                  
-                    <Form>
-                      <Form.Group style={{ width: '20rem' }} className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Filter</Form.Label>
-                        <Form.Control type="email" placeholder="IPhone" />
-                      </Form.Group>    
-                    </Form>
-                
-                    <Row className="justify-content-md-center">
-                      {mapProducts(records)}
-                    </Row>
-                    
-                  
-
-                </Container>
-
-              
-            </span>
-          ) }
-          
-          
+          <LoadingModal dataTag="products" />
         </span>
-      )
-
+      ) : (
+        <span>                            
+            <Container fluid className='top-spacing'>
+              <h1 className='pageTitle'>Products List</h1>                  
+              <Form>
+                <Form.Group style={{ width: '20rem' }} className="mb-3" controlId="exampleForm.ControlInput1">
+                  <Form.Label>Filter</Form.Label>
+                  <Form.Control type="email" placeholder="IPhone" />
+                </Form.Group>    
+              </Form>                
+              <Row className="justify-content-md-center">
+                {mapProducts(records)}
+              </Row>                                      
+            </Container>              
+        </span>
+      ) }                    
+    </span>
+  )
 }
 
 export default Home

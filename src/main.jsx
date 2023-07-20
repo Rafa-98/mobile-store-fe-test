@@ -11,18 +11,19 @@ import ProductDetails from "./features/product-details/view/product-details.jsx"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Header from './components/header/header';
+import { ROUTES } from './utils/ROUTES';
 
 const routes = [
   {
-    path: "/",
+    path: ROUTES.HOME,
     element: <Home />,
   },
   {
-    path: "/details",
+    path: ROUTES.DETAILS,
     element: <ProductDetails />
   },
   {
-    path: "*",
+    path: ROUTES.ANY,
     element: <Home />
   }
 ];
