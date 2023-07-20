@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
+import InputGroup from 'react-bootstrap/InputGroup';
 import { getProductsDetails } from '../services/product-details';
 import React, { useState, useEffect } from "react";
 
@@ -40,12 +41,15 @@ function color(product) {
 function ProductDetails() {
 
     const [record, setRecord] = useState(null)
+    const [mobileColorCode, setColor] = useState("")
+    const [mobileStorageCode, setStorage] = useState("")
+    const [validated, setValidated] = useState(false);
     const {state} = useLocation();
     const { productId } = state; // Read values passed on state
     
     useEffect(() => {                  
-        //getProductsDetails("ZmGrkLRPXOTpxsU4jjAcv")
-        getProductsDetails(productId)
+        getProductsDetails("ZmGrkLRPXOTpxsU4jjAcv")
+        //getProductsDetails(productId)
         .then((product) => { 
             console.log("La respuesta del detalle de product: ", product);                       
             setRecord(product);            
@@ -56,6 +60,29 @@ function ProductDetails() {
     const width = 500;
 
     const dispatch = useDispatch();
+
+    const addToCart = (event) => {
+      console.log("Agregado al carrito")
+
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      setValidated(true);
+
+    }
+
+    const storageChanged = (storageSelected) => {
+      console.log("Ha escogido el storage: ", storageSelected)
+      setStorage(storageSelected);
+    }
+    
+    const colorChanged = (colorSelected) => {
+      console.log("Ha escogido el color: ", colorSelected)
+      setColor(colorSelected);
+    }
 
     return (
         <span>            
@@ -76,7 +103,7 @@ function ProductDetails() {
                             <Card.Text>
                               <b>Brand:</b> {record.brand}<br />
                               <b>Model:</b> {record.model}<br />
-                              <b>Price:</b> {record.price}<br />
+                              <b>Price:</b> ${record.price}<br />
                               <b>CPU:</b> {record.cpu}<br />
                               <b>RAM:</b> {record.ram}<br />
                               <b>os:</b> {record.os}<br />
@@ -90,19 +117,32 @@ function ProductDetails() {
                         </Card>
                         <br />
                         <Card className='card-spacing'>
+                          <Form noValidate validated={validated} onSubmit={addToCart}>
                             <span>Select Storage</span>
-                            <Form.Select aria-label="Default select example">
-                              <option>Select Storage</option>
-                              {storage(record)}         
-                            </Form.Select>
+                            <Form.Group hasValidation>
+                              <Form.Select required aria-label="Default select example" value={mobileStorageCode} onChange={e => {storageChanged(e.target.value)}}>
+                                <option value="">Select Storage</option>
+                                {storage(record)}         
+                              </Form.Select>
+                              <Form.Control.Feedback type="invalid">
+                                Please choose a storage.
+                              </Form.Control.Feedback>
+                            </Form.Group>
                             <br />
                             <span>Select Color</span>
-                            <Form.Select aria-label="Default select example">
-                              <option>Select Color</option>
-                              {color(record)}                    
-                            </Form.Select>
+                            <Form.Group hasValidation>
+                              <Form.Select required aria-label="Default select example" value={mobileColorCode} onChange={e => {colorChanged(e.target.value)}}>
+                                <option value="">Select Color</option>
+                                {color(record)}                    
+                              </Form.Select>
+                              <Form.Control.Feedback type="invalid">
+                                Please choose a color.
+                              </Form.Control.Feedback>
+                            </Form.Group>
                             <br />
-                            <Button variant="primary" >Add to cart</Button>
+                            
+                            <Button type="submit" variant="primary">Add to cart</Button>
+                          </Form>                            
                         </Card>                       
                     </Col>                                                   
                 </Row>
@@ -115,7 +155,7 @@ function ProductDetails() {
     /*return (
         <span>
             
-
+<Button type="submit" variant="primary" onClick={addToCart}>Add to cart</Button>
             <br /><br /><br /><br />
             <Button variant="primary" onClick={() => {dispatch(add_to_cart(150))}}>Add to cart</Button>
         </span>
