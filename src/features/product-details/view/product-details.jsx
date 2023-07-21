@@ -47,7 +47,8 @@ function ProductDetails() {
     const [mobileStorageCode, setStorage] = useState("")
     const [validated, setValidated] = useState(false);
     const [id, setId] = useState("");
-    const {state} = useLocation();        
+    const {state} = useLocation();  
+    const [loading, setLoading] = useState(true)        
 
     let productId = "";    
     
@@ -56,16 +57,19 @@ function ProductDetails() {
         productId = state.productId   
         setId(productId)     
       }      
-      if (productId == null || productId == "") {        
+      if (productId == null || productId == "") {                
         navigate(ROUTES.HOME);
       }          
-      else {        
+      else {                
         getProductData(productId)
           .then((product) => {      
             console.log("La respuesta del detalle de product: ", product);                      
             setRecord(product);  
           })
-          .catch((err) => console.log(err));        
+          .catch((err) => console.log(err)) 
+          .finally(() => {
+            setLoading(false);
+          })
       }          
     }, [])
 
@@ -107,7 +111,7 @@ function ProductDetails() {
         <span>                        
             <h1 className='pageTitle'>Product details</h1>
             <Container fluid className='top-spacing'>
-            {record == null ? (
+            {loading == true ? (
                 <LoadingModal dataTag="product details" />
             ) : (
                 <span>                

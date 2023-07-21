@@ -27,7 +27,10 @@ function Home() {
       setProductsToDisplay(result);  
       setLoading(false);
     })
-    .catch((err) => console.log(err));           
+    .catch((err) => console.log(err))
+    .finally(() => {
+      setLoading(false);
+    })          
   }, [])  
   
   const navigate = useNavigate();
