@@ -9,7 +9,7 @@ function LoadingModal(props) {
         <Modal show="true" >
           <Modal.Header>
             <Modal.Title>
-                Loading {props.dataTag}
+                Loading {props.dataTag} <br />
                 <Spinner animation="border" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </Spinner>

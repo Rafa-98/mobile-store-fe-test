@@ -1,4 +1,4 @@
-import { getProducts, getProduct } from '../../../http/https';
+import { getProducts } from '../../../http/https';
 import { getData, storeData } from '../../../local-storage/local-storage';
 
 export const getProductsList = new Promise(async (resolve, reject) => {

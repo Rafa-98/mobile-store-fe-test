@@ -7,12 +7,11 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { getProductsDetails, getProductData, addProduct } from '../services/product-details';
+import { getProductData, addProduct } from '../services/product-details';
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { add_to_cart } from "./../../../redux/actions/cartAction";
 
 
@@ -171,16 +170,7 @@ function ProductDetails() {
             )}
             </Container>
         </span>   
-    )
-
-    /*return (
-        <span>
-            
-<Button type="submit" variant="primary" onClick={addToCart}>Add to cart</Button>
-            <br /><br /><br /><br />
-            <Button variant="primary" onClick={() => {dispatch(add_to_cart(150))}}>Add to cart</Button>
-        </span>
-    )*/
+    ) 
 }
 
 export default ProductDetails

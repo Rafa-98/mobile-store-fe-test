@@ -1,4 +1,3 @@
-import Header from '../../../components/header/header';
 import LoadingModal from '../../../components/modal/modal';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,9 +7,8 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import React, { useState, useEffect } from "react";
 
-import { getProductsList, filterProducts, getProductsData } from '../services/home-service';
-import { connect, useSelector, useDispatch } from "react-redux";
-import { add_to_list } from "./../../../redux/actions/productListAction";
+import { getProductsData } from '../services/home-service';
+import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 
