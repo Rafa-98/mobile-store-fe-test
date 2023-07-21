@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { getProductsDetails } from '../services/product-details';
+import { getProductsDetails, getProductData } from '../services/product-details';
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -59,13 +59,20 @@ function ProductDetails() {
       if (productId == null || productId == "") {        
         navigate(ROUTES.HOME);
       }          
-      else {               
-        getProductsDetails(productId)
+      else {        
+        getProductData(productId)
+          .then((product) => {      
+            console.log("La respuesta del detalle de product: ", product);                      
+            setRecord(product);  
+          })
+          .catch((err) => console.log(err));
+
+        /*getProductsDetails(productId)
         .then((product) => { 
             console.log("La respuesta del detalle de product: ", product);                      
             setRecord(product);            
           })
-        .catch((err) => console.log(err));    
+        .catch((err) => console.log(err));    */
       }          
     }, [])
 

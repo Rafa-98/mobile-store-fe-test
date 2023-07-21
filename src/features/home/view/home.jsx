@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import React, { useState, useEffect } from "react";
 
-import { getProductsList, filterProducts } from '../services/home-service';
+import { getProductsList, filterProducts, getProductsData } from '../services/home-service';
 import { connect, useSelector, useDispatch } from "react-redux";
 import { add_to_list } from "./../../../redux/actions/productListAction";
 
@@ -25,14 +25,14 @@ function Home() {
   let products = useSelector((state) => state.productsList)
   const dispatch = useDispatch();
   
-  useEffect(() => {                  
-      getProductsList
-      .then((productsList) => {                        
-          setRecords(productsList);  
-          setProductsToDisplay(productsList);  
-          setLoading(false);  
-        })
-      .catch((err) => console.log(err));      
+  useEffect(() => {  
+    getProductsData
+    .then((result) => {      
+      setRecords(result);  
+      setProductsToDisplay(result);  
+      setLoading(false);
+    })
+    .catch((err) => console.log(err));           
   }, [])  
   
   const navigate = useNavigate();

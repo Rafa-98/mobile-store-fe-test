@@ -1,7 +1,7 @@
 import { ADD_TO_CART } from '../actions/cartAction';
 
 const default_cart = {
-    quantity: 10
+    quantity: 0
 }
 
 const cart = (state = default_cart, action) => {
