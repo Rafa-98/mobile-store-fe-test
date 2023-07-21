@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
+import Spinner from 'react-bootstrap/Spinner';
 import { getProductData, addProduct } from '../services/product-details';
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +49,8 @@ function ProductDetails() {
     const [validated, setValidated] = useState(false);
     const [id, setId] = useState("");
     const {state} = useLocation();  
-    const [loading, setLoading] = useState(true)        
+    const [loading, setLoading] = useState(true)
+    const [sendingRequest, setRequestStatus] = useState(false) 
 
     let productId = "";    
     
@@ -87,6 +89,7 @@ function ProductDetails() {
         event.stopPropagation();
       }
       else {
+        setRequestStatus(true);
         console.log('Enviando peticion de compra al servidor: ', id, " ", mobileColorCode, " ", mobileStorageCode)
         addProduct(id, mobileColorCode, mobileStorageCode)
           .then((response) => {      
@@ -164,8 +167,13 @@ function ProductDetails() {
                             </Form.Group>
                             <br />
                             
-                            <Button type="submit" variant="primary">Add to cart</Button>
-                          </Form>                            
+                            <Button type="submit" variant="primary" className="addBtn" disabled={sendingRequest}>Add to cart</Button>
+                            {sendingRequest == true ? (
+                                <Spinner animation="border" role="status" className="spinner">
+                                  <span className="visually-hidden">Loading...</span>
+                                </Spinner>
+                            ) : (<span></span>)}                            
+                          </Form>         
                         </Card>                       
                     </Col>                                                   
                 </Row>

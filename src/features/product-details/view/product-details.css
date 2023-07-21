@@ -1,3 +1,12 @@
 .card-spacing {
     padding: 10px;
 }
+
+.addBtn {
+    margin-top: -3%;
+}
+
+.spinner {
+    margin-top: 2%;
+    margin-left: 2%;
+}
