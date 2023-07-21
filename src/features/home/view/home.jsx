@@ -5,10 +5,9 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { getProductsData } from '../services/home-service';
-import { useSelector, useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
 
@@ -19,9 +18,7 @@ function Home() {
 
   const [records, setRecords] = useState([])
   const [productsToDisplay, setProductsToDisplay] = useState([])
-  const [loading, setLoading] = useState(true)
-  let products = useSelector((state) => state.productsList)
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true)  
   
   useEffect(() => {  
     getProductsData

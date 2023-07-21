@@ -1,4 +1,3 @@
-import Header from '../../../components/header/header';
 import LoadingModal from '../../../components/modal/modal';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import { getProductData, addProduct } from '../services/product-details';
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";

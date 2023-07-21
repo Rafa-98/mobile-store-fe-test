@@ -5,7 +5,6 @@ import { Cart2 } from 'react-bootstrap-icons';
 import Badge from 'react-bootstrap/Badge';
 
 import { useSelector } from "react-redux";
-import React from "react";
 
 function Header() {
 
