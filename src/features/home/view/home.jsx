@@ -40,8 +40,8 @@ function Home() {
     products.map((product) => {
       tempProducts.push(
         <Col xl="3" lg="4" md="6" sm="12">
-          <Card style={{ width: '18rem' }} className='card-margin-spacing'>
-            <Card.Img variant="top" src={product.imgUrl} className='card-image-spacing'/>
+          <Card border="secondary" className='card-margin-spacing'>
+            <Card.Img variant="top" src={product.imgUrl} className="img"/>
             <Card.Body className="card-body">          
               <Card.Text>
                 <b>Brand:</b> {product.brand}<br />
@@ -73,7 +73,7 @@ function Home() {
       ) : (
         <span>                            
             <Container fluid className='top-spacing'>
-              <h1 className='pageTitle'>Products List</h1>                  
+              <h1 className='pageTitle'>Products List</h1>              
               <Form>
                 <Form.Group style={{ width: '20rem' }} className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Filter</Form.Label>

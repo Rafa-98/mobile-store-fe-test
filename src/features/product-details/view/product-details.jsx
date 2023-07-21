@@ -75,7 +75,7 @@ function ProductDetails() {
       }          
     }, [])
 
-    const width = 500;
+    const width = 450;
 
     const dispatch = useDispatch();
 
@@ -112,8 +112,9 @@ function ProductDetails() {
 
     return (
         <span>                        
+          <Container fluid className='top-spacing'>
             <h1 className='pageTitle'>Product details</h1>
-            <Container fluid className='top-spacing'>
+            
             {loading == true ? (
                 <LoadingModal dataTag="product details" />
             ) : (
@@ -179,7 +180,7 @@ function ProductDetails() {
                 </Row>
                 </span>
             )}
-            </Container>
+          </Container>
         </span>   
     ) 
 }

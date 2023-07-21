@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Cart2 } from 'react-bootstrap-icons';
 import Badge from 'react-bootstrap/Badge';
+import './header.css'
 
 import { useSelector } from "react-redux";
 
@@ -22,7 +23,7 @@ function Header() {
               </Navbar.Collapse>
               <Navbar.Collapse className="justify-content-end">
               <Navbar.Text>
-                <Cart2  size={40} /><Badge bg="success">{cart.quantity}</Badge>
+                <Cart2  size={40} /><Badge bg="success" className='badgePosition'>{cart.quantity}</Badge>
               </Navbar.Text>
             </Navbar.Collapse>
             </Container>
