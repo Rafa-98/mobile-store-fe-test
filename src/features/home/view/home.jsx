@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { useState, useEffect } from "react";
 
-import { getProductsData } from '../services/home-service';
+import { getProductsData, filterProducts } from '../services/home-service';
 
 import { useNavigate } from "react-router-dom";
 
@@ -24,8 +24,7 @@ function Home() {
     getProductsData
     .then((result) => {      
       setRecords(result);  
-      setProductsToDisplay(result);  
-      setLoading(false);
+      setProductsToDisplay(result);        
     })
     .catch((err) => console.log(err))
     .finally(() => {
@@ -59,11 +58,8 @@ function Home() {
   }
 
   const [filterString, setFilterString] = useState([])
-  const filterProducts = (text) => {            
-    var result = records.filter(function (product) {
-      return ((product.brand.toUpperCase()).includes(text.toUpperCase()) || (product.model.toUpperCase()).includes(text.toUpperCase()))
-    })
-    
+  const filterProductsList = (text) => {  
+    var result = filterProducts(records, text);               
     setFilterString(text);    
     setProductsToDisplay(result);
   }
@@ -81,7 +77,7 @@ function Home() {
               <Form>
                 <Form.Group style={{ width: '20rem' }} className="mb-3" controlId="exampleForm.ControlInput1">
                   <Form.Label>Filter</Form.Label>
-                  <Form.Control type="text" placeholder="Filter by Brand or Model" value={filterString} onChange={e => {filterProducts(e.target.value)}}/>
+                  <Form.Control type="text" placeholder="Filter by Brand or Model" value={filterString} onChange={e => {filterProductsList(e.target.value)}}/>
                 </Form.Group>    
               </Form>                
               <Row className="justify-content-md-center">

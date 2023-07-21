@@ -6,15 +6,13 @@ export const getProductsList = new Promise(async (resolve, reject) => {
     resolve(products);
 });
 
-export const filterProducts = (products, filterString) => {    
-    products.map((product) => {
-        if((product.brand).includes(filterString) || (product.model).includes(filterString)) {
-            return product;
-        }
-    });
+export const filterProducts = (products, filterString) => {       
+    return products.filter(function (product) {
+        return ((product.brand.toUpperCase()).includes(filterString.toUpperCase()) || (product.model.toUpperCase()).includes(filterString.toUpperCase()))
+    })
 }
 
-async function getProductsListFromServer() {
+export async function getProductsListFromServer() {
     return await getProductsList
         .then((productsList) => {                        
               let products = productsList;
@@ -31,25 +29,18 @@ async function getProductsListFromServer() {
 }
 
 export const getProductsData = new Promise(async (resolve, reject) => {
-    var data = await getData('productsList');    
-    console.log("La data que devuelve el storage: ", data)
-    if(data.products == null || data.products.length == 0) { 
-        console.log("A llamar al servidor")
+    var data = await getData('productsList');        
+    if(data.products == null || data.products.length == 0) {         
         data = await getProductsListFromServer()                 
         resolve(data);
     }
     else {
-        var now = new Date();        
-        console.log("Tiempo de ahora: ", now.getTime())
-        console.log("Tiempo de expiracion: ", data.expiryDateTime)
-        console.log("Ahora es mayor que el expiry: ", now.getTime() > data.expiryDateTime)
-        if(now.getTime() > data.expiryDateTime) {  
-            console.log("Se excedio el tiempo maximo de vida del localStorage")          
+        var now = new Date();                
+        if(now.getTime() > data.expiryDateTime) {              
             data = await getProductsListFromServer()                     
             resolve(data);
         }
-        else { 
-            console.log("Responde desde el localstorage: ", data)           
+        else {             
             resolve(data.products);
         }
     }
