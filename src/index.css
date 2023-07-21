@@ -15,6 +15,10 @@
   text-align: center;  
 }
 
+.errorMsg {
+  color: red;
+}
+
 @media only screen and (max-width: 1100px) {
   .top-spacing {
       padding-top: 4%;

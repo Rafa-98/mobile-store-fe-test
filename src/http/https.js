@@ -2,40 +2,35 @@ import axios from 'axios';
 
 const URL = "https://itx-frontend-test.onrender.com/api";
 
-export async function getProducts() {   
-   console.log("Entro a getProducts") 
-    return axios
+export async function getProducts() {      
+    return await axios
          .get(URL + '/product')
-         .then((response) => {
-            console.log("Response: ", response)
+         .then((response) => {            
             return response.data;
          })
-         .catch((err) => {
-            console.log(err);
+         .catch((err) => {                        
+            throw err
          });
 }
 
-export async function getProduct(productId) {
-   console.log("Entro a getProduct") 
-    return axios
+export async function getProduct(productId) {   
+    return await axios
          .get(URL + '/product/' + productId)
-         .then((response) => {
-            console.log("Response: ", response)
+         .then((response) => {            
             return response.data;
          })
-         .catch((err) => {
-            console.log(err);
+         .catch((err) => {            
+            throw err
          });
 }
 
-export function AddProductToCart(product) {
-   console.log("Entro a AddProductToCart") 
-    return axios
+export async function AddProductToCart(product) {   
+    return await axios
          .post(URL + '/cart/', product)
          .then((response) => {
             return response.data;
          })
-         .catch((err) => {
-            console.log(err);
+         .catch((err) => {            
+            throw err
          });
 }

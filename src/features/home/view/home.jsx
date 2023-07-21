@@ -18,15 +18,20 @@ function Home() {
 
   const [records, setRecords] = useState([])
   const [productsToDisplay, setProductsToDisplay] = useState([])
-  const [loading, setLoading] = useState(true)  
+  const [loading, setLoading] = useState(true) 
+  const [error, setError] = useState(false)  
   
   useEffect(() => {  
     getProductsData
-    .then((result) => {      
+    .then((result) => {   
+      if(result == null) throw Error('Error')   
       setRecords(result);  
       setProductsToDisplay(result);        
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {      
+      console.log(err)
+      setError(true);
+    })
     .finally(() => {
       setLoading(false);
     })          
@@ -71,19 +76,29 @@ function Home() {
           <LoadingModal dataTag="products" />
         </span>
       ) : (
-        <span>                            
-            <Container fluid className='top-spacing'>
-              <h1 className='pageTitle'>Products List</h1>              
-              <Form>
-                <Form.Group style={{ width: '20rem' }} className="mb-3" controlId="exampleForm.ControlInput1">
-                  <Form.Label>Filter</Form.Label>
-                  <Form.Control type="text" placeholder="Filter by Brand or Model" value={filterString} onChange={e => {filterProductsList(e.target.value)}}/>
-                </Form.Group>    
-              </Form>                
-              <Row className="justify-content-md-center">
-                {mapProducts(productsToDisplay)}
-              </Row>                                      
-            </Container>              
+        <span>    
+            { error == true ? (
+              <span>    
+                <Container fluid className='top-spacing'>
+                  <h1 className="errorMsg">An error has ocurred. Please try again later.</h1>
+                </Container>                            
+              </span>
+            ) : (
+              <span>
+                <Container fluid className='top-spacing'>
+                  <h1 className='pageTitle'>Products List</h1>              
+                  <Form>
+                    <Form.Group style={{ width: '20rem' }} className="mb-3" controlId="exampleForm.ControlInput1">
+                      <Form.Label>Filter</Form.Label>
+                      <Form.Control type="text" placeholder="Filter by Brand or Model" value={filterString} onChange={e => {filterProductsList(e.target.value)}}/>
+                    </Form.Group>    
+                  </Form>                
+                  <Row className="justify-content-md-center">
+                    {mapProducts(productsToDisplay)}
+                  </Row>                                      
+                </Container>  
+              </span>
+            )}                        
         </span>
       ) }                    
     </span>

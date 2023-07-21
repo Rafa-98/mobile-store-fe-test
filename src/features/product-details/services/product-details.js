@@ -2,11 +2,14 @@ import { getProduct, AddProductToCart } from '../../../http/https';
 import { getData, storeData } from '../../../local-storage/local-storage';
 
 export const getProductsDetails = function (productId){
-    return new Promise(async (resolve, reject) => {
-        var products = await getProduct(productId);
+    return new Promise((resolve, reject) => {
+        var products = getProduct(productId);
         resolve(products);
+    })
+    .catch((err) => {    
+        return null
     });
-} 
+}
 
 export async function getProductFromServer(productId) {
     return await getProductsDetails(productId)
@@ -21,7 +24,10 @@ export async function getProductFromServer(productId) {
               storeData(productId, dataToStore)              
               return product;
           })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            console.log(err)
+            throw err
+        });
 }
 
 export const getProductData = function (productId){
@@ -45,12 +51,15 @@ export const getProductData = function (productId){
 };
 
 export const addProduct = function (productId, productColor, productStorage){
-    return new Promise(async (resolve, reject) => {
-        var count = await AddProductToCart({
+    return new Promise((resolve, reject) => {
+        var count = AddProductToCart({
             id: productId,
             colorCode: productColor,
             storageCode: productStorage
         });
         resolve(count);
+    })
+    .catch((err) => {    
+        return null
     });
 }

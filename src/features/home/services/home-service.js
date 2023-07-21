@@ -1,10 +1,13 @@
 import { getProducts } from '../../../http/https';
 import { getData, storeData } from '../../../local-storage/local-storage';
 
-export const getProductsList = new Promise(async (resolve, reject) => {
-    var products = await getProducts();
+export const getProductsList = new Promise((resolve, reject) => {
+    var products = getProducts();
     resolve(products);
-});
+    
+}).catch((err) => {    
+    return null
+})
 
 export const filterProducts = (products, filterString) => {       
     return products.filter(function (product) {
@@ -25,7 +28,10 @@ export async function getProductsListFromServer() {
               storeData('productsList', dataToStore)              
               return products;
           })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            console.log(err)
+            throw err
+        });
 }
 
 export const getProductsData = new Promise(async (resolve, reject) => {
