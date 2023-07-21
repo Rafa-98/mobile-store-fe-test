@@ -8,7 +8,7 @@ export const getProductsDetails = function (productId){
     });
 } 
 
-async function getProductFromServer(productId) {
+export async function getProductFromServer(productId) {
     return await getProductsDetails(productId)
         .then((productData) => {                        
               let product = productData;
