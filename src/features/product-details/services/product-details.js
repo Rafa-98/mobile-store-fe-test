@@ -1,4 +1,4 @@
-import { getProduct } from '../../../http/https';
+import { getProduct, AddProductToCart } from '../../../http/https';
 import { getData, storeData } from '../../../local-storage/local-storage';
 
 export const getProductsDetails = function (productId){
@@ -43,3 +43,14 @@ export const getProductData = function (productId){
         }
     })
 };
+
+export const addProduct = function (productId, productColor, productStorage){
+    return new Promise(async (resolve, reject) => {
+        var count = await AddProductToCart({
+            id: productId,
+            colorCode: productColor,
+            storageCode: productStorage
+        });
+        resolve(count);
+    });
+}

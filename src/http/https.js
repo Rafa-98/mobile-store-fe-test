@@ -28,12 +28,12 @@ export async function getProduct(productId) {
          });
 }
 
-function AddProductToCart(product) {
+export function AddProductToCart(product) {
    console.log("Entro a AddProductToCart") 
-    axios
+    return axios
          .post(URL + '/cart/', product)
          .then((response) => {
-            return response;
+            return response.data;
          })
          .catch((err) => {
             console.log(err);

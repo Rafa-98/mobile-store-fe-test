@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { getProductsDetails, getProductData } from '../services/product-details';
+import { getProductsDetails, getProductData, addProduct } from '../services/product-details';
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -48,13 +48,15 @@ function ProductDetails() {
     const [mobileColorCode, setColor] = useState("")
     const [mobileStorageCode, setStorage] = useState("")
     const [validated, setValidated] = useState(false);
+    const [id, setId] = useState("");
     const {state} = useLocation();        
 
     let productId = "";    
     
     useEffect(() => { 
       if (state !== null) {
-        productId = state.productId        
+        productId = state.productId   
+        setId(productId)     
       }      
       if (productId == null || productId == "") {        
         navigate(ROUTES.HOME);
@@ -65,14 +67,7 @@ function ProductDetails() {
             console.log("La respuesta del detalle de product: ", product);                      
             setRecord(product);  
           })
-          .catch((err) => console.log(err));
-
-        /*getProductsDetails(productId)
-        .then((product) => { 
-            console.log("La respuesta del detalle de product: ", product);                      
-            setRecord(product);            
-          })
-        .catch((err) => console.log(err));    */
+          .catch((err) => console.log(err));        
       }          
     }, [])
 
@@ -81,16 +76,25 @@ function ProductDetails() {
     const dispatch = useDispatch();
 
     const addToCart = (event) => {
+      event.preventDefault();
       console.log("Agregado al carrito")
 
       const form = event.currentTarget;
       if (form.checkValidity() === false) {
-        event.preventDefault();
+        
         event.stopPropagation();
       }
-
-      setValidated(true);
-
+      else {
+        console.log('Enviando peticion de compra al servidor: ', id, " ", mobileColorCode, " ", mobileStorageCode)
+        addProduct(id, mobileColorCode, mobileStorageCode)
+          .then((response) => {      
+            console.log("La respuesta del carrito: ", response); 
+            dispatch(add_to_cart(response.count))
+            navigate(ROUTES.HOME);
+          })
+          .catch((err) => console.log(err));
+      }     
+      setValidated(true);       
     }
 
     const storageChanged = (storageSelected) => {      
