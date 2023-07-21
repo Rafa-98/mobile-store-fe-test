@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Provider } from 'react-redux'
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
 import store from './redux/store.js'
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -12,6 +14,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Header from './components/header/header';
 import { ROUTES } from './utils/ROUTES';
+
+let persistor = persistStore(store)
 
 const routes = [
   {
@@ -33,8 +37,10 @@ const router = createBrowserRouter(routes);
 ReactDOM.createRoot(document.getElementById('root')).render(
   
     <Provider store={store}>
-      <Header />
-      <RouterProvider router={router} />
+      <PersistGate persistor={persistor}>
+        <Header />
+        <RouterProvider router={router} />
+      </PersistGate>      
     </Provider>
   
 )
